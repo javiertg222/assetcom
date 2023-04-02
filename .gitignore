@@ -6,8 +6,8 @@
 .pnp.js
 
 # rutas con archivos privados
-/server/images/*
-/server/bbdd/.sqlite3
+images/
+bbdd/
 
 # testing
 /coverage
