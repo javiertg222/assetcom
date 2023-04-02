@@ -31,6 +31,7 @@ function App() {
           <Route path="/assets" element={<AssetsList />}></Route>
           <Route path="/assets/form" element={<AssetForm />}></Route>
           <Route path="/barcode" element={<BarCode />}></Route>
+          
         </Routes>
         <Footer />
       </div>

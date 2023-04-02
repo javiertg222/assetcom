@@ -1,4 +1,4 @@
-const db = require("../bbdd/database");
+const db = require("../database");
 const bcrypt = require("../services/bcryptService");
 /**
  * Obtener todos los usuarios

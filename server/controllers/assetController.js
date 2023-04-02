@@ -1,4 +1,4 @@
-const db = require("../bbdd/database");
+const db = require("../database");
 /**
  * Obtener todos los activos
  * @param {*} req

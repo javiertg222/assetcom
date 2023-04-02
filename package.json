@@ -12,7 +12,7 @@
     "daw"
   ],
   "author": "Javier",
-  "license": "CC",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv-defaults": "^5.0.2",

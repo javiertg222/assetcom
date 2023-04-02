@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { Container, Table, Button } from "react-bootstrap";
+import { useState, useEffect} from "react";
+import { Container, Table, Button, ButtonToolbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import AlertData from "./AlertData";
-import { FaBarcode } from "react-icons/fa";
+import { FaBarcode, FaFilePdf } from "react-icons/fa";
+import Pdf from "./Pdf";
 
 function AssetsList() {
   //Constante estado para enviar los datos de un activo al formulario para modificar
@@ -10,16 +11,18 @@ function AssetsList() {
   //Constante estado para todos los activo
   //const [asset, setAsset] = useState([]);
   const [assets, setAssets] = useState([]);
+  const [pulsado, setPulsado] = useState(false);
 
   /**
    * Obtener los activos de la api para mostrarlos en la tabla
    */
 
-  function listAssets() {
+function listAssets(){
     fetch("http://localhost:3001/api/assets")
       .then((res) => res.json())
       .then((data) => setAssets(data))
       .catch((error) => console.log(error));
+
   }
   /**
    * Borrar usuarios
@@ -40,9 +43,18 @@ function AssetsList() {
   return (
     <>
       <Container className="m-6" fluid>
-        <Button className="m-3" as={Link} to="/assets/form" variant="primary">
-          Nuevo Activo
-        </Button>
+      {pulsado? <Pdf/>:null}
+        <ButtonToolbar
+          className="justify-content-between"
+          aria-label="Toolbar with Button groups"
+        >
+          <Button className="m-3" as={Link} to="/assets/form" variant="primary">
+            Nuevo Activo
+          </Button>
+          <Button className="justify-content-between m-3" onClick={()=>setPulsado(true)} variant="danger">
+            <FaFilePdf size={"1.5em"} />
+          </Button>
+        </ButtonToolbar>
         <Table hover>
           <thead>
             <tr>
