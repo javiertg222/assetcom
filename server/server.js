@@ -7,7 +7,7 @@ const express = require("express");
 const cors = require("cors");
 
 //Módulo para las variables de entorno
-require("dotenv-defaults/config");
+require('dotenv').config()
 
 const {
   getUsers,
@@ -26,7 +26,7 @@ const {
 
 //const auth = require("./middlewares/auth");
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(cors());

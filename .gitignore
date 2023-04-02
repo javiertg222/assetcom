@@ -2,13 +2,12 @@
 
 # dependencies
 /node_modules
-client/node_modules
 /.pnp
 .pnp.js
 
 # rutas con archivos privados
-server/images
-server/bbdd/.sqlite3
+/server/images/*
+/server/bbdd/.sqlite3
 
 # testing
 /coverage
