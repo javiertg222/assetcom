@@ -2,15 +2,21 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "./MyDocument";
 import AlertData from "./AlertData";
 
-const Pdf = () => (
-  <PDFDownloadLink document={<MyDocument />} fileName={new Date()+".pdf"}>
+const Pdf = (assets) => (
+  <PDFDownloadLink
+    document={<MyDocument data={assets} />}
+    fileName={new Date() + ".pdf"}
+    style={{
+      marginLeft: 50,
+      textAlign: "right",
+    }}
+  >
     {(blob, url, loading, error) =>
       error
         ? AlertData("Algo ha salido mal...", "danger")
-        : AlertData(
-            loading ? "Loading document..." : "Descarga aquí!",
-            "success"
-          )
+        : loading
+        ? AlertData("Loading document...", "success")
+        : AlertData("Download PDF!", "success")
     }
   </PDFDownloadLink>
 );

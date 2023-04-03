@@ -77,6 +77,7 @@ function AssetForm() {
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
+    console.log(formJson)
 
     //Variables para modificar los parámetros del fetch según sea crear/modificar activos
     let url = "";
@@ -100,8 +101,9 @@ function AssetForm() {
       method: metodo,
       body: JSON.stringify(formJson),
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
+        
       },
     })
       .then((res) => {
@@ -189,7 +191,8 @@ function AssetForm() {
             type="file"
             name="image"
             size="sm"
-            defaultValue={state != null ? state.assetData.image : ""}
+             accept="image/*"
+            onChange={handleInputChange}
           />
         </Form.Group>
         <Button variant="secondary" type="reset" onClick={() => reset()}>

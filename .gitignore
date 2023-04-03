@@ -7,7 +7,7 @@
 
 # rutas con archivos privados
 images/
-bbdd/
+.sqlite3
 
 # testing
 /coverage

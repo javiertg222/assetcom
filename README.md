@@ -25,12 +25,20 @@ v18.14.1
 `npm start`
 
 ### Front-end
-`npm i` para instalar las dependencias
-Ir a la carpeta client y ejecutar  `npm start`
+http://localhost:3001
+
+En la raiz del proyecto
 
 
 ### Back-end
 
-`npm i` para instalar las dependencias
+http://localhost:3002
 
-Ir a la carpeta server y ejecutar  `npm start`
+En la carpeta server
+
+### Deploy
+
+En la raiz del proyecto ejecutar:
+
+`npm start` (levanta el servidor y el cliente simultáneamente)
+

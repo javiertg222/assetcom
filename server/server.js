@@ -5,9 +5,8 @@
 const express = require("express");
 //Módulo para evitar Access-Control-Allow-Origin
 const cors = require("cors");
-
 //Módulo para las variables de entorno
-require('dotenv').config()
+require("dotenv").config();
 
 const {
   getUsers,
@@ -43,7 +42,7 @@ app.post("/api/asset", function (req, res, next) {
 /**
  * Listar un activo por id
  */
-app.get("/api/asset/:id",function (req, res, next) {
+app.get("/api/asset/:id", function (req, res, next) {
   getAsset(req, res);
 });
 /**

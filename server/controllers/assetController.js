@@ -1,4 +1,5 @@
 const db = require("../database");
+//const upload = require("./updateController");
 /**
  * Obtener todos los activos
  * @param {*} req
@@ -39,6 +40,7 @@ async function getAsset(req, res, id) {
  * @returns
  */
 async function createAsset(req, res) {
+console.log(req.body)
   const sql = `INSERT INTO asset(image,name_asset,serial_number,id_status,id_location,fecha)
   VALUES($image,$assetname,$serialnumber,(SELECT id_status FROM status WHERE status=$status),(SELECT id_location FROM location WHERE location=$location), datetime('now'))`;
   let data = {
@@ -46,7 +48,7 @@ async function createAsset(req, res) {
     $serialnumber: req.body.serialnumber,
     $status: req.body.status,
     $location: req.body.location,
-    $image: req.body.image.name
+    $image: req.body.image,
   };
   const stm = db.prepare(sql, (error) => {
     if (error) {
@@ -77,7 +79,6 @@ async function updateAsset(req, res) {
     $serialnumber: req.body.serialnumber,
     $status: req.body.status,
     $location: req.body.location,
-    
   };
   const stm = db.prepare(sql, (error) => {
     if (error) {

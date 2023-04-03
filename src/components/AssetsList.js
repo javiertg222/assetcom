@@ -43,7 +43,7 @@ function listAssets(){
   return (
     <>
       <Container className="m-6" fluid>
-      {pulsado? <Pdf/>:null}
+      {pulsado? <Pdf data={assets}/>:null}
         <ButtonToolbar
           className="justify-content-between"
           aria-label="Toolbar with Button groups"
@@ -51,7 +51,7 @@ function listAssets(){
           <Button className="m-3" as={Link} to="/assets/form" variant="primary">
             Nuevo Activo
           </Button>
-          <Button className="justify-content-between m-3" onClick={()=>setPulsado(true)} variant="danger">
+          <Button className="justify-content-between m-3" onClick={()=>setPulsado(true)} variant="danger" title="Exportar PDF">
             <FaFilePdf size={"1.5em"} />
           </Button>
         </ButtonToolbar>
@@ -75,9 +75,9 @@ function listAssets(){
                 <td>{AlertData("No hay activos para mostrar.", "warning")}</td>
               </tr>
             ) : (
-              assets.map((asset) => (
+              assets.map((asset, index) => (
                 <>
-                  <tr key={asset.id_asset}>
+                  <tr key={index.id_asset}>
                     <td>{asset.id_asset}</td>
                     <td>{asset.image}</td>
                     <td>{asset.name_asset}</td>
@@ -100,10 +100,6 @@ function listAssets(){
                     <td>
                       <Button
                         variant="outline-success"
-                        /**
-                        Con el Hook usenavigate podemos pasar a una ruta un segundo parámetro como objeto.
-                        En este caso paso los datos de un usuario según la fila de usuario.
-                        */
                         onClick={() =>
                           navigate("/assets/form", {
                             state: { assetData: asset },
