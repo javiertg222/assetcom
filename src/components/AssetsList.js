@@ -1,5 +1,5 @@
 import { useState, useEffect} from "react";
-import { Container, Table, Button, ButtonToolbar } from "react-bootstrap";
+import { Container, Table, Button, ButtonToolbar, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import AlertData from "./AlertData";
 import { FaBarcode, FaFilePdf } from "react-icons/fa";
@@ -79,7 +79,7 @@ function listAssets(){
                 <>
                   <tr key={index.id_asset}>
                     <td>{asset.id_asset}</td>
-                    <td>{asset.image}</td>
+                    <td><Image fluid/></td>
                     <td>{asset.name_asset}</td>
                     <td>{asset.serial_number}</td>
                     <td>{asset.status}</td>

@@ -68,9 +68,9 @@ function UsersList() {
                 <td>{AlertData("No hay usuarios para mostrar.", "warning")}</td>
               </tr>
             ) : (
-              users.map((user) => (
+              users.map((user, index) => (
                 <>
-                  <tr key={user.id_user}>
+                  <tr key={index}>
                     <td
                       onClick={() => {
                         setUser(user);

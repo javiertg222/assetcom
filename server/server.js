@@ -1,12 +1,10 @@
-/**
- * Zona para importar los módulos, middlewares y constantes necesarias.
- */
 //Servidor
 const express = require("express");
 //Módulo para evitar Access-Control-Allow-Origin
 const cors = require("cors");
 //Módulo para las variables de entorno
 require("dotenv").config();
+const upload = require("./controllers/uploadController");
 
 const {
   getUsers,
@@ -14,6 +12,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  changePassword,
 } = require("./controllers/userController");
 const {
   getAssets,
@@ -36,7 +35,7 @@ app.use(express.json());
  * Crear un activo
  */
 
-app.post("/api/asset", function (req, res, next) {
+app.post("/api/asset", upload.upload, function (req, res, next) {
   createAsset(req, res);
 });
 /**
@@ -81,7 +80,7 @@ app.get("/api/user/:id", (req, res, next) => {
  * Insertar usuarios
  */
 
-app.post("/api/user", (req, res, next) => {
+app.post("/api/user", (req, res) => {
   createUser(req, res);
 });
 
@@ -90,7 +89,7 @@ app.post("/api/user", (req, res, next) => {
  */
 
 app.put("/api/user/update/:id", (req, res, next) => {
-  updateUser(req, res);
+  updateUser(req, res, next);
 });
 
 /**
@@ -98,6 +97,13 @@ app.put("/api/user/update/:id", (req, res, next) => {
  */
 app.delete("/api/user/delete/:id", (req, res, next) => {
   deleteUser(req, res);
+});
+
+/**
+ * Cambiar la contraseña
+ */
+app.post("/api/changePassword", (req, res, next) => {
+  changePassword(req, res);
 });
 
 /**

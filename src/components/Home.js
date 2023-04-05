@@ -1,11 +1,12 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
+import CardHome from "../components/CardHome";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 const data = {
-  labels: ["Red", "Blue", "Yellow"],
+  labels: ["Baja", "Alta", "Pendientes"],
   datasets: [
     {
       label: ["Assets"],
@@ -20,25 +21,39 @@ const data = {
   ],
 };
 
-const options = {
-  
-};
+const options = {};
 
 function Home() {
   return (
-    <Container className="m-6" fluid>
-      <Card style={{ width: "20rem" }}>
-        <Card.Body>
-          <Card.Title>Assets</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">
-            Activos en la empresa
-          </Card.Subtitle>
-          <Card.Text>
-            <Doughnut data={data} options={options} />
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </Container>
+    <>
+      <Container className="m-5">
+        <Row>
+          <Col>
+            <Card style={{ width: "20rem" }}>
+              <Card.Body>
+                <Card.Title>Activos</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Activos en la empresa
+                </Card.Subtitle>
+                <Card.Text>
+                  <Doughnut data={data} options={options} />
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <CardHome
+              datos={{ title: "Activos", color: "info", counter: 5 }}
+            />
+          </Col>
+          <Col>
+            <CardHome
+              datos={{ title: "Usuarios", color: "success", counter: 6 }}
+            />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 

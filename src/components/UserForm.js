@@ -24,17 +24,16 @@ function UserForm() {
     handleSubmit,
   } = useForm({ mode: "onChange" });
   const [datos, setDatos] = useState({
-    onename: "",
-    nick: "",
-    email: "",
-    password: "",
-    rol: "",
-    address: "",
-    ciudad: "",
-    provincia: "",
-    pais: "",
-});
-
+    onename: state != null ? state.userData.name_user : "",
+    nick: state != null ? state.userData.nickname_user : "",
+    email: state != null ? state.userData.email_user : "",
+    password: state != null ? state.userData.password_user : "",
+    rol: state != null ? state.userData.name_rol : "",
+    address: state != null ? state.userData.address_user : "",
+    ciudad: state != null ? state.userData.ciudad_user : "",
+    provincia: state != null ? state.userData.prov_user : "Coruña, A",
+    pais: state != null ? state.userData.pais_user : "Spain",
+  });
 
   /**
    * Recoge los datos del evento onChange del formulario
@@ -151,10 +150,18 @@ function UserForm() {
                 type="text"
                 name="onename"
                 placeholder="Enter name"
-                defaultValue={state != null ? state.userData.name_user : ""}
+                defaultValue={datos.onename}
                 onChange={handleInputChange}
-                required
+                {...register("onename", {
+                  required: {
+                    value: true,
+                    message: "Ingrese el nombre completo",
+                  },
+                })}
               />
+              <span className="text-danger text-small d-block mb-2">
+                {errors.onename && errors.onename.message}
+              </span>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridNickName">
               <Form.Label>Apodo</Form.Label>
@@ -162,10 +169,18 @@ function UserForm() {
                 type="text"
                 name="nick"
                 placeholder="Nick Name"
-                defaultValue={state != null ? state.userData.nickname_user : ""}
+                defaultValue={datos.nick}
                 onChange={handleInputChange}
-                required
+                {...register("nick", {
+                  required: {
+                    value: true,
+                    message: "Ingrese el apodo",
+                  },
+                })}
               />
+              <span className="text-danger text-small d-block mb-2">
+                {errors.nick && errors.nick.message}
+              </span>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Email</Form.Label>
@@ -173,14 +188,25 @@ function UserForm() {
                 type="email"
                 name="email"
                 placeholder="Email"
-                defaultValue={state != null ? state.userData.email_user : ""}
+                defaultValue={datos.email}
                 onChange={handleInputChange}
-                required
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Ingrese el email",
+                  },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Ingrese un email válido!",
+                  },
+
+                  validate: (defaultValue) =>
+                    !findEmail(defaultValue) ||
+                    "Ya existe un usuario con ese nombre ",
+                })}
               />
               <span className="text-danger text-small d-block mb-2">
-                {findEmail(datos.email)
-                  ? "Ya existe un usuario con este email"
-                  : ""}
+                {errors.email && errors.email.message}
               </span>
             </Form.Group>
             {state == null ? (
@@ -190,9 +216,7 @@ function UserForm() {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  defaultValue={
-                    state != null ? state.userData.password_user : ""
-                  }
+                  defaultValue={datos.password}
                   onChange={handleInputChange}
                   {...register("password", {
                     required: {
@@ -226,11 +250,11 @@ function UserForm() {
               <Form.Label>Rol</Form.Label>
               <Form.Select
                 name="rol"
-                defaultValue={state != null ? state.userData.name_rol : ""}
+                defaultValue={datos.rol}
                 onChange={handleInputChange}
               >
-                {roles.map((rol) => (
-                  <option>{rol}</option>
+                {roles.map((rol, index) => (
+                  <option key={index}>{rol}</option>
                 ))}
               </Form.Select>
             </Form.Group>
@@ -241,27 +265,38 @@ function UserForm() {
               <Form.Control
                 name="address"
                 placeholder="Calle..."
-                defaultValue={state != null ? state.userData.address_user : ""}
+                defaultValue={datos.address}
                 onChange={handleInputChange}
-                required
+                {...register("address", {
+                  required: {
+                    value: true,
+                    message: "Ingrese una dirección",
+                  },
+                })}
               />
+              <span className="text-danger text-small d-block mb-2">
+                {errors.address && errors.address.message}
+              </span>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridCity">
               <Form.Label>Ciudad</Form.Label>
 
               <Form.Select
                 name="ciudad"
-                defaultValue={state != null ? state.userData.ciudad_user : "Narón"}
+                defaultValue={datos.ciudad}
                 onChange={handleInputChange}
                 required
               >
                 {arbol.map((provincias) =>
                   provincias.provinces.map((provinces) =>
-                    (state == null ? datos.provincia : state.userData.prov_user) === provinces.label
-                      ? provinces.towns.map((towns) => (
-                          <option>{towns.label}</option>
-                        ))
-                   :null
+                    provinces.towns.map((towns, index) =>
+                      (datos.provincia || state.userData.prov_user) ===
+                      provinces.label ? (
+                        <option key={index}>{towns.label}</option>
+                      ) : (
+                        ""
+                      )
+                    )
                   )
                 )}
               </Form.Select>
@@ -270,12 +305,12 @@ function UserForm() {
               <Form.Label>Provincia</Form.Label>
               <Form.Select
                 name="provincia"
-                defaultValue={state != null ? state.userData.prov_user : "Coruña, A"}
+                defaultValue={datos.provincia}
                 onChange={handleInputChange}
               >
                 {arbol.map((provincias) =>
-                  provincias.provinces.map((towns) => (
-                    <option>{towns.label}</option>
+                  provincias.provinces.map((towns, index) => (
+                    <option key={index}>{towns.label}</option>
                   ))
                 )}
               </Form.Select>
@@ -286,11 +321,11 @@ function UserForm() {
 
               <Form.Select
                 name="pais"
-                defaultValue={state != null ? state.userData.pais_user : "Spain"}
+                defaultValue={datos.pais}
                 onChange={handleInputChange}
               >
-                {paises.map((pais) => (
-                  <option>{pais.name}</option>
+                {paises.map((pais, index) => (
+                  <option key={index}>{pais.name}</option>
                 ))}
               </Form.Select>
             </Form.Group>

@@ -1,5 +1,6 @@
 const db = require("../database");
 const bcrypt = require("../services/bcryptService");
+const changepass = require("../utils/findPassword");
 /**
  * Obtener todos los usuarios
  * @param {*} req
@@ -40,29 +41,7 @@ async function getUser(req, res, id) {
  * @param {*} res
  * @returns
  */
-async function createUser(req, res) {
-  const errors = [];
-  if (!req.body.onename) {
-    errors.push("Nombre no especificado");
-  }
-  if (!req.body.nick) {
-    errors.push("Apodo no especificado");
-  }
-  if (!req.body.email) {
-    errors.push("Email no especificado");
-  }
-  if (!req.body.password) {
-    errors.push("Password no especificado");
-  }
-  if (!req.body.address) {
-    errors.push("Dirección no especificado");
-  }
-
-  if (errors.length) {
-    res.status(400).json({ error: errors.join(",") });
-    return;
-  }
-
+async function createUser(req, res, next) {
   const sql = `INSERT INTO user(name_user,nickname_user,email_user,password_user,address_user,ciudad_user,prov_user,pais_user,id_rol,fecha)
   VALUES($onename,$nickname,$email,$password,$address, $ciudad,$provincia,$pais,(SELECT id_rol FROM rol WHERE name_rol=$rol), datetime('now'))`;
   let data = {
@@ -144,8 +123,43 @@ async function deleteUser(req, res) {
       return;
     }
     res.json({ message: "deleted", data: req.params });
+    db.run(
+      'UPDATE sqlite_sequence SET seq = (SELECT MAX("id_user") FROM user) WHERE name="user"'
+    );
   });
   stm.finalize();
+}
+
+async function changePassword(req, res) {
+  const id = Number(req.params.id);
+  const users = req.body;
+  const password = req.body.password;
+
+  if (!changepass.findPassword(password, users)) {
+    res.json({ mesage: "La contraseña no se encuentra" });
+  } else {
+    let sql = `UPDATE user SET password_userr=$password,fecha=datetime('now') WHERE id_user=${id}`;
+    let data = {
+      $password: await bcrypt.encrypt(req.body.password),
+    };
+    const stm = db.prepare(sql, (error) => {
+      if (error) {
+        throw new Error(error.message);
+      }
+    });
+
+    stm.run(data, (error) => {
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        res.json({
+          message: "success",
+          data: data,
+        });
+      }
+    });
+    stm.finalize();
+  }
 }
 
 module.exports = {
@@ -154,4 +168,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  changePassword,
 };

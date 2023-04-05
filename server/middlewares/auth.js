@@ -14,7 +14,7 @@ function isAuth(req, res, next) {
   }
 
   req.user = payload.sub;
-  next;
+  next();
 }
 
-module.exports = isAuth;
+module.exports = {isAuth};

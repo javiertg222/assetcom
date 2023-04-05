@@ -77,7 +77,6 @@ function AssetForm() {
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson)
 
     //Variables para modificar los parámetros del fetch según sea crear/modificar activos
     let url = "";
@@ -101,9 +100,8 @@ function AssetForm() {
       method: metodo,
       body: JSON.stringify(formJson),
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
-        
       },
     })
       .then((res) => {
@@ -125,7 +123,11 @@ function AssetForm() {
             "success"
           )
         : null}
-      <Form id="form-asset" method="POST" onSubmit={handleSubmitAsset}>
+      <Form
+        id="form-asset"
+        method="POST"
+        onSubmit={handleSubmitAsset}
+      >
         <h3>{state == null ? "Crear" : "Modificar"} Activo:</h3>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridAssetName">
@@ -191,7 +193,7 @@ function AssetForm() {
             type="file"
             name="image"
             size="sm"
-             accept="image/*"
+            accept="image/*"
             onChange={handleInputChange}
           />
         </Form.Group>

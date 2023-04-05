@@ -1,5 +1,5 @@
 const db = require("../database");
-//const upload = require("./updateController");
+
 /**
  * Obtener todos los activos
  * @param {*} req
@@ -40,7 +40,6 @@ async function getAsset(req, res, id) {
  * @returns
  */
 async function createAsset(req, res) {
-console.log(req.body)
   const sql = `INSERT INTO asset(image,name_asset,serial_number,id_status,id_location,fecha)
   VALUES($image,$assetname,$serialnumber,(SELECT id_status FROM status WHERE status=$status),(SELECT id_location FROM location WHERE location=$location), datetime('now'))`;
   let data = {
@@ -114,8 +113,12 @@ async function deleteAsset(req, res) {
       return;
     }
     res.json({ message: "deleted", data: req.params });
+    db.run(
+      'UPDATE sqlite_sequence SET seq = (SELECT MAX("id_asset") FROM asset) WHERE name="asset"'
+    );
   });
   stm.finalize();
+  
 }
 
 module.exports = {
