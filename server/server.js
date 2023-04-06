@@ -22,6 +22,8 @@ const {
   deleteAsset,
 } = require("./controllers/assetController");
 
+const {getEstadisticas} = require("./controllers/estadisticasController")
+
 //const auth = require("./middlewares/auth");
 
 const PORT = process.env.PORT;
@@ -105,6 +107,12 @@ app.delete("/api/user/delete/:id", (req, res, next) => {
 app.post("/api/changePassword", (req, res, next) => {
   changePassword(req, res);
 });
+/**
+ * Estadísticas
+ */
+app.get("/api/estadisticas", (req,res,next)=>{
+  getEstadisticas(req, res);
+})
 
 /**
  * Iniciar el servidor

@@ -123,9 +123,7 @@ async function deleteUser(req, res) {
       return;
     }
     res.json({ message: "deleted", data: req.params });
-    db.run(
-      'UPDATE sqlite_sequence SET seq = (SELECT MAX("id_user") FROM user) WHERE name="user"'
-    );
+  
   });
   stm.finalize();
 }

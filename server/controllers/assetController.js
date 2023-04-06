@@ -113,9 +113,7 @@ async function deleteAsset(req, res) {
       return;
     }
     res.json({ message: "deleted", data: req.params });
-    db.run(
-      'UPDATE sqlite_sequence SET seq = (SELECT MAX("id_asset") FROM asset) WHERE name="asset"'
-    );
+      
   });
   stm.finalize();
   

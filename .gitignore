@@ -8,6 +8,8 @@
 # rutas con archivos privados
 images/
 .sqlite3
+.sqlite
+.sqlitedb
 
 # testing
 /coverage
