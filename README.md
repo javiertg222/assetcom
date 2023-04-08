@@ -38,7 +38,7 @@ En la carpeta server
 
 ### Deploy
 
-1. Clonar el proyecto y configurar el archivo .env con las variables. Ver el archivo de ejemplo (.env.example)[https://github.com/javiertg222/assetcom#readme]
+1. Clonar el proyecto y configurar el archivo .env con las variables. Ver el archivo de ejemplo [.env.example](https://github.com/javiertg222/assetcom/blob/main/.env.example)
 
 2. En la raiz del proyecto ejecutar:
 
