@@ -23,7 +23,7 @@ export default function Footer() {
 
         <ul className="nav col-md-1 justify-content-end list-unstyled d-flex">
           <li className="ms-1">
-            <a className="text-muted" href="https://github.com/javiertg222/assetcom.git">
+            <a className="text-muted" target="_blank" href="https://github.com/javiertg222/assetcom.git" rel="noreferrer">
               <i className="bi bi-github" style={{ fontSize: "1.9rem" }} />
             </a>
           </li>

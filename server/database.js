@@ -87,6 +87,43 @@ let db = new sqlite3.Database(process.env.DATABASE_FILE, (error) => {
       FOREIGN KEY("id_location") REFERENCES "location"("id_location"),
       FOREIGN KEY("id_status") REFERENCES "status"("id_status")
     )`);
+    //Crear la tabla para el contador de activos
+    db.run(
+      `CREATE TABLE IF NOT EXISTS "asset_counter" (
+        "id"	INTEGER NOT NULL UNIQUE,
+        "name"	TEXT NOT NULL UNIQUE,
+        "cant"	INTEGER,
+        PRIMARY KEY("id" AUTOINCREMENT)
+      )`
+    );
+    //Crear la tabla para el contador de usuarios
+    db.run(
+      `CREATE TABLE IF NOT EXISTS "user_counter" (
+        "id"	INTEGER NOT NULL UNIQUE,
+        "name"	TEXT NOT NULL UNIQUE,
+        "cant"	INTEGER,
+        PRIMARY KEY("id" AUTOINCREMENT)
+      )`
+    );
+    //CREAR LOS TRIGGERS
+    db.run(`CREATE TRIGGER IF NOT EXISTS delete_asset AFTER DELETE ON asset
+      BEGIN
+      UPDATE asset_counter SET cant = cant-1 WHERE id = old.id_status;
+      UPDATE sqlite_sequence SET seq = (SELECT MAX("id_asset") FROM asset) WHERE name="asset";
+      END`);
+    db.run(`CREATE TRIGGER IF NOT EXISTS delete_user AFTER DELETE ON user
+      BEGIN
+      UPDATE user_counter SET cant  = cant-1 WHERE id = 1;
+      UPDATE sqlite_sequence SET seq = (SELECT MAX("id_user") FROM user) WHERE name="user";
+      END`);
+    db.run(`CREATE TRIGGER IF NOT EXISTS insert_asset AFTER INSERT ON asset
+      BEGIN
+      UPDATE asset_counter SET cant  = cant+1 WHERE id = new.id_status;
+      END`);
+    db.run(`CREATE TRIGGER IF NOT EXISTS insert_user AFTER INSERT ON user
+      BEGIN
+      UPDATE user_counter SET cant  = cant+1 WHERE id = 1;
+      END`);
   }
 });
 

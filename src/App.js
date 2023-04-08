@@ -2,10 +2,11 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
 import Settings from "./components/Settings";
+import NotFound404 from "./components/NotFound404";
 import Cards from "./components/Cards";
 import UserForm from "./components/UserForm";
 import UsersList from "./components/UsersList";
@@ -31,6 +32,8 @@ function App() {
           <Route path="/assets" element={<AssetsList />}></Route>
           <Route path="/assets/form" element={<AssetForm />}></Route>
           <Route path="/barcode" element={<BarCode />}></Route>
+          <Route path="/404" element={<NotFound404/>} />
+          <Route path="*" element={<Navigate to="/404" />} />
           
         </Routes>
         <Footer />

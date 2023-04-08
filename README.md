@@ -38,7 +38,9 @@ En la carpeta server
 
 ### Deploy
 
-En la raiz del proyecto ejecutar:
+1. Clonar el proyecto y configurar el archivo .env con las variables. Ver el archivo de ejemplo (.env.example)[https://github.com/javiertg222/assetcom#readme]
+
+2. En la raiz del proyecto ejecutar:
 
 `npm start` (levanta el servidor y el cliente simultáneamente)
 

@@ -14,10 +14,10 @@ function CardHome(props) {
     },
   };
   return (
-    <Card style={{ width: "20rem" }} bg={props.datos.color}>
+    <Card style={{ width: "20rem" }} bg={props.data.color}>
       <Card.Body>
-        <Card.Title style={estilos.title}>{props.datos.title}</Card.Title>
-        <Card.Text style={estilos.counter}>{props.datos.counter}</Card.Text>
+        <Card.Title style={estilos.title}>{props.data.title}</Card.Title>
+        <Card.Text style={estilos.counter}>{props.data.counter}</Card.Text>
       </Card.Body>
     </Card>
   );

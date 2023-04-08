@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import AlertData from "./AlertData";
 import CardUser from "./CardUser";
+import Searcher from "./Searcher";
+import { FaSearch } from "react-icons/fa";
+
 
 function UsersList() {
   //Constante estado para enviar los datos de un usuario al formulario para modificar
@@ -12,6 +15,12 @@ function UsersList() {
   const [users, setUsers] = useState([]);
   //Constante estado para mostrar una tarjeta con los datos de un usuario
   const [pulsado, setPulsado] = useState(false);
+  const [search, setSearch] = useState("");
+  const searcherToParent = (datosSearch) => {
+    setSearch(datosSearch);
+  };
+  const result = !search? users : users.filter((user)=>user.name_user.toLowerCase().includes(search.toLowerCase()))
+
 
   /**
    * Obtener los usuarios de la api para mostrarlos en la tabla
@@ -42,6 +51,12 @@ function UsersList() {
   return (
     <>
       <Container className="m-6" fluid>
+      <Row className="justify-content-md-center mt-3">
+          <Col md="auto" lg="3">
+          <Searcher searcherToParent={searcherToParent} />
+          </Col>
+          <Col md="auto"><FaSearch size={"1.4em"} /></Col>
+        </Row>
         <Button
           className="m-3"
           as={Link}
@@ -68,7 +83,7 @@ function UsersList() {
                 <td>{AlertData("No hay usuarios para mostrar.", "warning")}</td>
               </tr>
             ) : (
-              users.map((user, index) => (
+              result.map((user, index) => (
                 <>
                   <tr key={index}>
                     <td
