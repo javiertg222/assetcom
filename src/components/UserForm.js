@@ -88,6 +88,8 @@ function UserForm() {
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
+
+    console.log(formJson)
     //Variables para modificar los parámetros del fetch según sea crear/modificar usuario
     let url = "";
     let metodo = "";

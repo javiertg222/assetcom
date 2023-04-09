@@ -6,7 +6,6 @@ import CardUser from "./CardUser";
 import Searcher from "./Searcher";
 import { FaSearch } from "react-icons/fa";
 
-
 function UsersList() {
   //Constante estado para enviar los datos de un usuario al formulario para modificar
   const navigate = useNavigate();
@@ -19,8 +18,13 @@ function UsersList() {
   const searcherToParent = (datosSearch) => {
     setSearch(datosSearch);
   };
-  const result = !search? users : users.filter((user)=>user.name_user.toLowerCase().includes(search.toLowerCase()))
-
+  const result = !search
+    ? users
+    : users.filter(
+        (user) =>
+          user.name_user.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+          user.nickname_user.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
+      );
 
   /**
    * Obtener los usuarios de la api para mostrarlos en la tabla
@@ -51,11 +55,13 @@ function UsersList() {
   return (
     <>
       <Container className="m-6" fluid>
-      <Row className="justify-content-md-center mt-3">
+        <Row className="justify-content-md-center mt-3">
           <Col md="auto" lg="3">
-          <Searcher searcherToParent={searcherToParent} />
+            <Searcher searcherToParent={searcherToParent} />
           </Col>
-          <Col md="auto"><FaSearch size={"1.4em"} /></Col>
+          <Col md="auto">
+            <FaSearch size={"1.4em"} />
+          </Col>
         </Row>
         <Button
           className="m-3"
@@ -143,7 +149,7 @@ function UsersList() {
                         */
                         onClick={() =>
                           navigate("/admin/users/form", {
-                            state:{userData: user},
+                            state: { userData: user },
                           })
                         }
                       >

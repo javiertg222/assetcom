@@ -20,11 +20,18 @@ function AssetsList() {
   //Constante estado para todos los activos
   const [assets, setAssets] = useState([]);
   const [pulsado, setPulsado] = useState(false);
+  //Constante para el buscador
   const [search, setSearch] = useState("");
   const searcherToParent = (datosSearch) => {
     setSearch(datosSearch);
   };
-  const result = !search? assets : assets.filter((asset)=>asset.name_asset.toLowerCase().includes(search.toLowerCase()))
+  const result = !search
+    ? assets
+    : assets.filter(
+        (asset) =>
+          asset.name_asset.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+          asset.serial_number.toLowerCase().includes(search.toLowerCase())
+      );
 
   /**
    * Obtener los activos de la api para mostrarlos en la tabla
