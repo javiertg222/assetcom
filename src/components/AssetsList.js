@@ -15,6 +15,22 @@ import Pdf from "./Pdf";
 import Searcher from "./Searcher";
 
 function AssetsList() {
+  /**
+   * Cambia de color el status de la tabla según sea "Alta, "Pendiente" o "Baja"
+   * @param {*} asset
+   * @returns
+   */
+  const estilo = (asset) => {
+    if (asset.status === "Alta") {
+      return "green";
+    }
+    if (asset.status === "Pendiente") {
+      return "yellow";
+    }
+    if (asset.status === "Baja") {
+      return "red";
+    }
+  };
   //Constante estado para enviar los datos de un activo al formulario para modificar
   const navigate = useNavigate();
   //Constante estado para todos los activos
@@ -22,14 +38,18 @@ function AssetsList() {
   const [pulsado, setPulsado] = useState(false);
   //Constante para el buscador
   const [search, setSearch] = useState("");
-  const searcherToParent = (datosSearch) => {
+  const searcherToAssets = (datosSearch) => {
     setSearch(datosSearch);
   };
   const result = !search
     ? assets
     : assets.filter(
         (asset) =>
-          asset.name_asset.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
+          asset.name_asset
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(search.toLowerCase()) ||
           asset.serial_number.toLowerCase().includes(search.toLowerCase())
       );
 
@@ -64,7 +84,7 @@ function AssetsList() {
       <Container className="m-6" fluid>
         <Row className="justify-content-md-center mt-3">
           <Col md="auto" lg="3">
-            <Searcher searcherToParent={searcherToParent} />
+            <Searcher searcherToParent={searcherToAssets} />
           </Col>
           <Col md="auto">
             <FaSearch size={"1.4em"} />
@@ -116,7 +136,7 @@ function AssetsList() {
                     </td>
                     <td>{asset.name_asset}</td>
                     <td>{asset.serial_number}</td>
-                    <td>{asset.status}</td>
+                    <td style={{ color: estilo(asset) }}>{asset.status}</td>
                     <td>{asset.location}</td>
                     <td>{asset.fecha}</td>
                     <td>

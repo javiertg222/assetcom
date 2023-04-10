@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<LoginForm />}></Route>
           <Route path="/password" element={<ChangePass />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
-          <Route path="/settings" element={<Settings />}></Route>
+          <Route path="/admin/settings" element={<Settings />}></Route>
           <Route path="/admin" element={<Cards />}></Route>
           <Route path="/admin/users" element={<UsersList />}></Route>
           <Route path="/admin/users/form" element={<UserForm />}></Route>

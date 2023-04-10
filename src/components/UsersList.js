@@ -14,16 +14,27 @@ function UsersList() {
   const [users, setUsers] = useState([]);
   //Constante estado para mostrar una tarjeta con los datos de un usuario
   const [pulsado, setPulsado] = useState(false);
+  /**
+   * Buscar y filtrar usuarios
+   */
   const [search, setSearch] = useState("");
-  const searcherToParent = (datosSearch) => {
+  const searcherToUserList = (datosSearch) => {
     setSearch(datosSearch);
   };
-  const result = !search
+  let result = !search
     ? users
     : users.filter(
         (user) =>
-          user.name_user.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase()) ||
-          user.nickname_user.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase())
+          user.name_user
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(search.toLowerCase()) ||
+          user.nickname_user
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(search.toLowerCase())
       );
 
   /**
@@ -52,12 +63,13 @@ function UsersList() {
   useEffect(() => {
     listUsers();
   }, []);
+
   return (
     <>
       <Container className="m-6" fluid>
         <Row className="justify-content-md-center mt-3">
           <Col md="auto" lg="3">
-            <Searcher searcherToParent={searcherToParent} />
+            <Searcher searcherToParent={searcherToUserList} />
           </Col>
           <Col md="auto">
             <FaSearch size={"1.4em"} />
@@ -71,7 +83,7 @@ function UsersList() {
         >
           Nuevo Usuario
         </Button>
-        <Table hover>
+        <Table hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -91,7 +103,7 @@ function UsersList() {
             ) : (
               result.map((user, index) => (
                 <>
-                  <tr key={index}>
+                  <tr key={user.id_user}>
                     <td
                       onClick={() => {
                         setUser(user);

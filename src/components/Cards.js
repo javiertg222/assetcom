@@ -2,6 +2,7 @@ import Card from "react-bootstrap/Card";
 import { Row, Col, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import users from "../imagenes/users.svg";
+import settings from "../imagenes/settings.svg";
 
 function Cards() {
   return (
@@ -24,9 +25,24 @@ function Cards() {
               </Card.Body>
             </Card>
           </Col>
+          <Col>
+            <Card>
+              <Link to="settings">
+                <Card.Img
+                  className="m-2"
+                  variant="top"
+                  src={settings}
+                  style={{ height: "5rem" }}
+                />
+              </Link>
+              <Card.Body>
+                <Card.Title>Configuración</Card.Title>
+                <Card.Text>Espacio para configurar la aplicación.</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
         </Row>
       </Container>
-    
     </>
   );
 }

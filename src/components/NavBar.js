@@ -30,9 +30,6 @@ function NavBar() {
               <NavDropdown.Item as={Link} to="/admin">
                 Administration
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/settings">
-                Settings
-              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/logout">
                 Logout

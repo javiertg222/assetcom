@@ -1,9 +1,12 @@
 import { Form } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function Searcher({searcherToParent}) {
   const [search, setSearch] = useState("");
-  const searcher = (e) => setSearch(e.target.value);
-  searcherToParent(search) 
+  const searcher = (e) => {e.preventDefault(); setSearch(e.target.value)};
+  useEffect(() => {
+    searcherToParent(search)
+  },);
+  
   return (
     <Form className="d-flex">
       <Form.Control

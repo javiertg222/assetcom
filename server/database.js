@@ -105,6 +105,16 @@ let db = new sqlite3.Database(process.env.DATABASE_FILE, (error) => {
         PRIMARY KEY("id" AUTOINCREMENT)
       )`
     );
+    //Crear la tabla para la configuración personalizada
+
+    db.run(
+      `CREATE TABLE IF NOT EXISTS "config" (
+        "id"	INTEGER NOT NULL UNIQUE,
+        "name"	TEXT,
+        "image"	TEXT,
+        PRIMARY KEY("id" AUTOINCREMENT)
+      )`
+    );
     //CREAR LOS TRIGGERS
     db.run(`CREATE TRIGGER IF NOT EXISTS delete_asset AFTER DELETE ON asset
       BEGIN
