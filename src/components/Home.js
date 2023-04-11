@@ -49,9 +49,9 @@ function Home() {
             estadisticas[2].cant,
           ],
           backgroundColor: [
-            "rgb(255, 99, 132)",
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
+            "red",
+            "green",
+            "yellow",
           ],
           hoverOffset: 4,
         },
@@ -79,7 +79,7 @@ function Home() {
                 <Card.Body>
                   <Card.Title>Activos</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    Activos en la empresa
+                    Activos registrados
                   </Card.Subtitle>
                   <Card.Text>
                     <Doughnut data={dataDonuts} options={options} />

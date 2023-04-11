@@ -70,7 +70,7 @@ async function createAsset(req, res) {
 async function updateAsset(req, res) {
   const id = Number(req.params.id);
   let sql = `UPDATE asset SET image=$image, name_asset=$assetname,serial_number=$serialnumber,
-  id_status=(SELECT id_status FROM status WHERE status =$status), id_status=(SELECT id_location FROM location WHERE location =$location),fecha=datetime('now') WHERE id_asset=${id}`;
+  id_status=(SELECT id_status FROM status WHERE status =$status), id_location=(SELECT id_location FROM location WHERE location =$location),fecha=datetime('now') WHERE id_asset=${id}`;
 
   let data = {
     $image: req.body.image.name,
