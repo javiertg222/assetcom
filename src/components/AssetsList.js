@@ -15,6 +15,7 @@ import Pdf from "./Pdf";
 import Searcher from "./Searcher";
 
 function AssetsList() {
+
   /**
    * Cambia de color el status de la tabla según sea "Alta, "Pendiente" o "Baja"
    * @param {*} asset
@@ -22,13 +23,13 @@ function AssetsList() {
    */
   const estilo = (asset) => {
     if (asset.status === "Alta") {
-      return "green";
+      return "#14A44D";
     }
     if (asset.status === "Pendiente") {
-      return "yellow";
+      return "#E4A11B";
     }
     if (asset.status === "Baja") {
-      return "red";
+      return "#DC4C64";
     }
   };
   //Constante estado para enviar los datos de un activo al formulario para modificar
@@ -132,7 +133,7 @@ function AssetsList() {
                   <tr key={index}>
                     <td>{asset.id_asset}</td>
                     <td>
-                      <Image fluid />
+                      <Image src={asset.image} style={{height:45 , width:45,}}  thumbnail/>
                     </td>
                     <td>{asset.name_asset}</td>
                     <td>{asset.serial_number}</td>

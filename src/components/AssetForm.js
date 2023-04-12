@@ -76,7 +76,7 @@ function AssetForm() {
 
     const form = e.target;
     const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
+    formData.append("datos", Object.entries(formData.entries()));
 
     //Variables para modificar los parámetros del fetch según sea crear/modificar activos
     let url = "";
@@ -98,11 +98,11 @@ function AssetForm() {
 
     fetch(url, {
       method: metodo,
-      body: JSON.stringify(formJson),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      body: formData,
+      // headers: {
+      //   Accept: "application/json",
+      //   "Content-Type": "multipart/form-data",
+      // },
     })
       .then((res) => {
         if (res.status === 200) {
@@ -187,7 +187,7 @@ function AssetForm() {
             </Form.Select>
           </Form.Group>
         </Row>
-        <Form.Group controlId="formFileSm" as={Col} className="mb-3">
+        <Form.Group controlId="formFileSm" as={Col} sm={5} className="mb-3">
           <Form.Label>Seleccione un archivo</Form.Label>
           <Form.Control
             type="file"
@@ -196,7 +196,7 @@ function AssetForm() {
             accept="image/*"
             onChange={handleInputChange}
           />
-        </Form.Group>
+        </Form.Group>{' '}
         <Button variant="secondary" type="reset" onClick={() => reset()}>
           Reset
         </Button>{" "}

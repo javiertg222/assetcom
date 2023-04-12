@@ -36,7 +36,7 @@ function Home() {
       </Alert>
     );
   } else {
-    //Datos para loas gráficas
+    //Datos para las gráficas
     const options = {};
     const dataDonuts = {
       labels: ["Baja", "Alta", "Pendientes"],
@@ -49,9 +49,9 @@ function Home() {
             estadisticas[2].cant,
           ],
           backgroundColor: [
-            "red",
-            "green",
-            "yellow",
+            "#DC4C64",
+            "#14A44D",
+            "#E4A11B",
           ],
           hoverOffset: 4,
         },

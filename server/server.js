@@ -4,8 +4,9 @@ const express = require("express");
 const cors = require("cors");
 //Módulo para las variables de entorno
 require("dotenv").config();
-const upload = require("./controllers/uploadController");
-
+//Middleware para subir imágenes al servidor
+const {upload} = require("./controllers/uploadController");
+//Controladores para los usuarios
 const {
   getUsers,
   getUser,
@@ -14,6 +15,7 @@ const {
   deleteUser,
   changePassword,
 } = require("./controllers/userController");
+//Controladores para los assets
 const {
   getAssets,
   getAsset,
@@ -22,22 +24,26 @@ const {
   deleteAsset,
 } = require("./controllers/assetController");
 
+//Controlador para las estadísticas
 const {getEstadisticas} = require("./controllers/estadisticasController")
 
 //const auth = require("./middlewares/auth");
-
+//Variable de entorno (puerto de escucha del servidor)
 const PORT = process.env.PORT;
-
+//Servidor express
 const app = express();
+//Previene la inyección de código malicioso
 app.use(cors());
 app.use(express.json());
+//Mapear las rutas de las imágenes subidas a express
+app.use('/public', express.static(`${__dirname}/uploads`))
 
 //ASSET ENDPOINTS
 /**
  * Crear un activo
  */
 
-app.post("/api/asset", upload.upload, function (req, res, next) {
+app.post("/api/asset", upload, function (req, res, next) {
   createAsset(req, res);
 });
 /**
@@ -49,7 +55,7 @@ app.get("/api/asset/:id", function (req, res, next) {
 /**
  * Modificar un activo
  */
-app.put("/api/asset/update/:id", function (req, res, next) {
+app.put("/api/asset/update/:id", upload, function (req, res, next) {
   updateAsset(req, res);
 });
 /**
@@ -100,6 +106,8 @@ app.put("/api/user/update/:id", (req, res, next) => {
 app.delete("/api/user/delete/:id", (req, res, next) => {
   deleteUser(req, res);
 });
+
+//MISCELLANEOUS ENDPOINTS
 
 /**
  * Cambiar la contraseña

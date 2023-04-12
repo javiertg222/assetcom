@@ -1,4 +1,5 @@
 const db = require("../database");
+const {deleteUploads} = require("../utils/deleteUploads")
 
 /**
  * Obtener todos los activos
@@ -40,6 +41,8 @@ async function getAsset(req, res, id) {
  * @returns
  */
 async function createAsset(req, res) {
+  // console.log(req.body)
+  // console.log(req.file)
   const sql = `INSERT INTO asset(image,name_asset,serial_number,id_status,id_location,fecha)
   VALUES($image,$assetname,$serialnumber,(SELECT id_status FROM status WHERE status=$status),(SELECT id_location FROM location WHERE location=$location), datetime('now'))`;
   let data = {
@@ -47,7 +50,9 @@ async function createAsset(req, res) {
     $serialnumber: req.body.serialnumber,
     $status: req.body.status,
     $location: req.body.location,
-    $image: req.body.image,
+    $image: req.file
+      ? `${process.env.URL}:${process.env.PORT}/public/${req.file.filename}`
+      : "",
   };
   const stm = db.prepare(sql, (error) => {
     if (error) {
@@ -68,17 +73,34 @@ async function createAsset(req, res) {
 }
 
 async function updateAsset(req, res) {
+  //recupero el id que viene como parámetro en la ruta
   const id = Number(req.params.id);
-  let sql = `UPDATE asset SET image=$image, name_asset=$assetname,serial_number=$serialnumber,
+  //Consulta sql
+  let sql = `UPDATE asset SET name_asset=$assetname,serial_number=$serialnumber,
   id_status=(SELECT id_status FROM status WHERE status =$status), id_location=(SELECT id_location FROM location WHERE location =$location),fecha=datetime('now') WHERE id_asset=${id}`;
-
+  //Datos a modificar en la tabla
   let data = {
-    $image: req.body.image.name,
     $assetname: req.body.assetname,
     $serialnumber: req.body.serialnumber,
     $status: req.body.status,
     $location: req.body.location,
   };
+
+  //Evaluo si se cambia la imagen o se deja la misma
+  if (req.file) {
+    sql = `UPDATE asset SET image=$image, name_asset=$assetname,serial_number=$serialnumber,
+    id_status=(SELECT id_status FROM status WHERE status =$status), id_location=(SELECT id_location FROM location WHERE location =$location),fecha=datetime('now') WHERE id_asset=${id}`;
+    data = {
+      $image: `${process.env.URL}:${process.env.PORT}/public/${req.file.filename}`,
+      $assetname: req.body.assetname,
+      $serialnumber: req.body.serialnumber,
+      $status: req.body.status,
+      $location: req.body.location,
+    };
+    //Elimino la imagen del servidor
+    deleteUploads(id);
+  }
+
   const stm = db.prepare(sql, (error) => {
     if (error) {
       throw new Error(error.message);
@@ -113,10 +135,10 @@ async function deleteAsset(req, res) {
       return;
     }
     res.json({ message: "deleted", data: req.params });
-      
   });
   stm.finalize();
-  
+   //Elimino la imagen del servidor
+   deleteUploads(id);
 }
 
 module.exports = {
