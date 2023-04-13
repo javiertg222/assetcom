@@ -6,13 +6,13 @@
 .pnp.js
 
 # rutas con archivos privados
-images/
-bbdd/
-backups/
+/server/backups/.sqlite3
+/server/uploads/.sqlite3
 .sqlite3
 .sqlite
 .sqlitedb
-uploads/
+/server/uploads/*.*
+
 
 # testing
 /coverage
