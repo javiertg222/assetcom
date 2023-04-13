@@ -7,11 +7,12 @@
 
 # rutas con archivos privados
 images/
-/server/bbdd/*.sqlite3
-/server/backups/*.sqlite3
+bbdd/
+backups/
+.sqlite3
 .sqlite
 .sqlitedb
-uploads
+uploads/
 
 # testing
 /coverage
