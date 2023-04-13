@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Container, Col, Form, Row } from "react-bootstrap";
-import AlertData from "./AlertData";
-const paises = require("../data/paises.json");
-const arbol = require("../data/ccaa-provincias-poblaciones.json");
-const roles = require("../data/roles.json");
+import AlertData from "../AlertData";
+const paises = require("../../data/paises.json");
+const arbol = require("../../data/ccaa-provincias-poblaciones.json");
+const roles = require("../../data/roles.json");
 
 function UserForm() {
   //Constante estado para todos los usuarios
@@ -30,7 +30,7 @@ function UserForm() {
     password: state != null ? state.userData.password_user : "",
     rol: state != null ? state.userData.name_rol : "",
     address: state != null ? state.userData.address_user : "",
-    ciudad: state != null ? state.userData.ciudad_user : "",
+    ciudad: state != null ? state.userData.ciudad_user : "Narón",
     provincia: state != null ? state.userData.prov_user : "Coruña, A",
     pais: state != null ? state.userData.pais_user : "Spain",
   });
@@ -89,7 +89,6 @@ function UserForm() {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
 
-    console.log(formJson)
     //Variables para modificar los parámetros del fetch según sea crear/modificar usuario
     let url = "";
     let metodo = "";
@@ -203,7 +202,7 @@ function UserForm() {
                   },
 
                   validate: (defaultValue) =>
-                    !findEmail(defaultValue) ||
+                    defaultValue===datos.email?null:!findEmail(defaultValue) ||
                     "Ya existe un usuario con ese nombre ",
                 })}
               />

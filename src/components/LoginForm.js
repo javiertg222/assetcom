@@ -75,7 +75,7 @@ function FormLogin() {
         <Form.Check type="checkbox" label="Recordarme" />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Enviar
+        Acceder
       </Button>
     </Form>
   );

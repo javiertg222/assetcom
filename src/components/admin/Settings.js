@@ -1,5 +1,5 @@
 import { Button, Container, Col, Form, Row } from "react-bootstrap";
-import AlertData from "./AlertData";
+import AlertData from "../AlertData";
 function Settings() {
   const handleSubmitConfig = (e) => e.preventDefault;
 

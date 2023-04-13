@@ -26,6 +26,8 @@ const {
 
 //Controlador para las estadísticas
 const {getEstadisticas} = require("./controllers/estadisticasController")
+//Controlador Backup
+const {backupController } = require("./controllers/backupController");
 
 //const auth = require("./middlewares/auth");
 //Variable de entorno (puerto de escucha del servidor)
@@ -37,7 +39,6 @@ app.use(cors());
 app.use(express.json());
 //Mapear las rutas de las imágenes subidas a express
 app.use('/public', express.static(`${__dirname}/uploads`))
-
 //ASSET ENDPOINTS
 /**
  * Crear un activo
@@ -120,10 +121,19 @@ app.post("/api/changePassword", (req, res, next) => {
  */
 app.get("/api/estadisticas", (req,res,next)=>{
   getEstadisticas(req, res);
+});
+/**
+ * Backups
+ */
+app.get("/api/backup", (req,res,next)=>{
+
+  backupController(req, res);
+  
 })
 
+
 /**
- * Iniciar el servidor
+ * INICIAR EL SERVIDOR
  */
 
 app.listen(PORT, () => {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import AlertData from "./AlertData";
+import AlertData from "../AlertData";
 import CardUser from "./CardUser";
-import Searcher from "./Searcher";
+import Searcher from "../Searcher";
 import { FaSearch } from "react-icons/fa";
 
 function UsersList() {
