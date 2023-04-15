@@ -1,7 +1,6 @@
-import "./App.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import Home from "./components/Home";
+import Home from "./components/inicio/Home";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
@@ -10,8 +9,8 @@ import NotFound404 from "./components/NotFound404";
 import Administration from "./components/admin/Administration";
 import UserForm from "./components/admin/UserForm";
 import UsersList from "./components/admin/UsersList";
-import AssetForm from "./components/AssetForm";
-import AssetsList from "./components/AssetsList";
+import AssetForm from "./components/asset/AssetForm";
+import AssetsList from "./components/asset/AssetsList";
 import ChangePass from "./components/ChangePass";
 import BarCode from "./components/BarCode";
 import Backups from "./components/admin/Backups";
@@ -23,7 +22,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<LoginForm />}></Route>
+          <Route path="/perfil" element={<LoginForm />}></Route>
           <Route path="/password" element={<ChangePass />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
           <Route path="/admin/settings" element={<Settings />}></Route>

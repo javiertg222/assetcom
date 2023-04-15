@@ -5,7 +5,7 @@ const cors = require("cors");
 //Módulo para las variables de entorno
 require("dotenv").config();
 //Middleware para subir imágenes al servidor
-const {upload} = require("./controllers/uploadController");
+const { upload } = require("./controllers/uploadController");
 //Controladores para los usuarios
 const {
   getUsers,
@@ -25,9 +25,11 @@ const {
 } = require("./controllers/assetController");
 
 //Controlador para las estadísticas
-const {getEstadisticas} = require("./controllers/estadisticasController")
+const { getEstadisticas } = require("./controllers/estadisticasController");
 //Controlador Backup
-const {backupController } = require("./controllers/backupController");
+const { backupController } = require("./controllers/backupController");
+//Controlador para la configuración
+const { createSetting, getSetting, updateSetting } = require("./controllers/settingsController");
 
 //const auth = require("./middlewares/auth");
 //Variable de entorno (puerto de escucha del servidor)
@@ -38,7 +40,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 //Mapear las rutas de las imágenes subidas a express
-app.use('/public', express.static(`${__dirname}/uploads`))
+app.use("/public", express.static(`${__dirname}/uploads`));
 //ASSET ENDPOINTS
 /**
  * Crear un activo
@@ -108,6 +110,28 @@ app.delete("/api/user/delete/:id", (req, res, next) => {
   deleteUser(req, res);
 });
 
+//SETTINGS ENDPOINTS
+/**
+ * Obtener datos configuración
+ */
+app.get("/api/settings", function (req, res, next) {
+  getSetting(req, res);
+});
+
+/**
+ * Añadir Configuración
+ */
+app.post("/api/setting", upload, function (req, res, next) {
+  createSetting(req, res);
+});
+/**
+ * Modificar usuarios
+ */
+
+app.put("/api/setting/update/:id", upload, function (req, res, next) {
+  updateSetting(req, res, next);
+});
+
 //MISCELLANEOUS ENDPOINTS
 
 /**
@@ -119,17 +143,15 @@ app.post("/api/changePassword", (req, res, next) => {
 /**
  * Estadísticas
  */
-app.get("/api/estadisticas", (req,res,next)=>{
+app.get("/api/estadisticas", (req, res, next) => {
   getEstadisticas(req, res);
 });
 /**
  * Backups
  */
-app.get("/api/backup", (req,res,next)=>{
-
+app.get("/api/backup", (req, res, next) => {
   backupController(req, res);
-  
-})
+});
 
 
 /**

@@ -9,10 +9,10 @@ import {
   Col,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import AlertData from "./AlertData";
+import AlertData from "../AlertData";
 import { FaBarcode, FaFilePdf, FaSearch } from "react-icons/fa";
 import Pdf from "./Pdf";
-import Searcher from "./Searcher";
+import Searcher from "../Searcher";
 
 function AssetsList() {
 

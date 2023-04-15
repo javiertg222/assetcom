@@ -3,10 +3,11 @@ const db = require("../database");
 /**
  * Función para eliminar
  * @param {*} id 
+ * @param {*} sql 
  */
 
-const deleteUploads = (id) => {
-  db.get("SELECT image FROM asset WHERE id_asset = ?", id, (err, row) => {
+const deleteUploads = (id, sql) => {
+  db.get(sql, id, (err, row) => {
 
     if(row.image){
     const arr = row.image.split("/");

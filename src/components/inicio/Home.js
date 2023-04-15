@@ -1,9 +1,10 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Card, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
-import CardHome from "../components/CardHome";
+import CardHome from "./CardHome";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "../../css/app.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -11,7 +12,6 @@ function Home() {
   const [loanding, setLoanding] = useState(true);
   const [estadisticas, setEstadisticas] = useState([]);
   useEffect(() => {
-    setTimeout(() => {
       fetch("http://localhost:3001/api/estadisticas")
         .then((res) => res.json())
         .then((data) => {
@@ -19,7 +19,6 @@ function Home() {
           setLoanding(false);
         })
         .catch((error) => console.log(error));
-    }, 1000);
   }, []);
 
   if (loanding) {
@@ -39,10 +38,10 @@ function Home() {
     //Datos para las gráficas
     const options = {};
     const dataDonuts = {
-      labels: ["Baja", "Alta", "Pendientes"],
+      labels: ["Baja", "Alta", "Mantenimiento"],
       datasets: [
         {
-          label: ["Assets"],
+          label: ["Activos"],
           data: [
             estadisticas[1].cant,
             estadisticas[0].cant,
@@ -79,7 +78,7 @@ function Home() {
                 <Card.Body>
                   <Card.Title>Activos</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    Activos registrados
+                    Activos registrados por estado
                   </Card.Subtitle>
                   <Card.Text>
                     <Doughnut data={dataDonuts} options={options} />
@@ -90,7 +89,7 @@ function Home() {
             {datos.map((dato, index) => (
               <Col key={index}>
                 <Link
-                  style={{ textDecoration: "none", color: "black" }}
+                  className="link"
                   to={dato.title === "Usuarios" ? "/admin/users" : "assets"}
                 >
                   <CardHome

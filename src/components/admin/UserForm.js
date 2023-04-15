@@ -255,7 +255,7 @@ function UserForm() {
                 onChange={handleInputChange}
               >
                 {roles.map((rol, index) => (
-                  <option key={index}>{rol}</option>
+                  <option key={index}>{rol.name}</option>
                 ))}
               </Form.Select>
             </Form.Group>

@@ -6,12 +6,12 @@
 .pnp.js
 
 # rutas con archivos privados
-/server/backups/.sqlite3
-/server/uploads/.sqlite3
+/server/backups
+/server/uploads
 .sqlite3
 .sqlite
 .sqlitedb
-/server/uploads/*.*
+/server/uploads
 
 
 # testing

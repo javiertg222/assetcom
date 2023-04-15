@@ -1,1 +1,15 @@
-["Alta", "Pendiente", "Baja"]
+[
+    {
+      "id": "1",
+      "name": "Alta"
+    },
+    {
+      "id": "2",
+      "name": "Mantenimiento"
+    },
+    {
+        "id": "3",
+        "name": "Baja"
+      }
+  ]
+  

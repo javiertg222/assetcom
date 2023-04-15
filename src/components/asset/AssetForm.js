@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Container, Col, Form, Row } from "react-bootstrap";
-import AlertData from "./AlertData";
-const statuses = require("../data/status.json");
-const locations = require("../data/location.json");
+import AlertData from "../AlertData";
+const statuses = require("../../data/status.json");
+const locations = require("../../data/location.json");
 
 function AssetForm() {
   //Constante estado para todos los activos
@@ -94,7 +94,7 @@ function AssetForm() {
       }
     }
 
-    // Se pasa formJson en el cuerpo directamente:
+    // Se pasa formData en el cuerpo directamente:
 
     fetch(url, {
       method: metodo,
@@ -168,7 +168,7 @@ function AssetForm() {
               onChange={handleInputChange}
             >
               {statuses.map((status) => (
-                <option value={status}>{status}</option>
+                <option value={status.name}>{status.name}</option>
               ))}
             </Form.Select>
           </Form.Group>
@@ -182,7 +182,7 @@ function AssetForm() {
               onChange={handleInputChange}
             >
               {locations.map((location) => (
-                <option value={location}>{location}</option>
+                <option value={location.name}>{location.name}</option>
               ))}
             </Form.Select>
           </Form.Group>

@@ -1,6 +1,6 @@
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "./MyDocument";
-import AlertData from "./AlertData";
+import AlertData from "../AlertData";
 
 const Pdf = (assets) => (
   <PDFDownloadLink

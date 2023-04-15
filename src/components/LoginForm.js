@@ -1,6 +1,5 @@
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import React, { useState } from "react";
-import renderErrorMessage from "../utils-client/renderErrorMessage";
 
 function FormLogin() {
   //Estado para abrir/cerrar la ventana modal
@@ -57,8 +56,6 @@ function FormLogin() {
         <Form.Text className="text-muted">
           No compartas este email con nadie.
         </Form.Text>
-        <br />
-        {renderErrorMessage("email", errorMessages)}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -69,7 +66,6 @@ function FormLogin() {
           placeholder="Password"
           required
         />
-        {renderErrorMessage("pass", errorMessages)}
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Recordarme" />

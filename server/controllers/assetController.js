@@ -98,7 +98,7 @@ async function updateAsset(req, res) {
       $location: req.body.location,
     };
     //Elimino la imagen del servidor
-    deleteUploads(id);
+    deleteUploads(id, "SELECT image FROM asset WHERE id_asset = ?");
   }
 
   const stm = db.prepare(sql, (error) => {
