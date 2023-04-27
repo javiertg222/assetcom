@@ -10,10 +10,14 @@ import {
   Col,
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import decodeToken from "../utils-client/decodeToken";
 
 function NavBar() {
-  const [config, setConfig] = useState([]);
+  //Decodificar el token para utilixar el nombre de usuario
+  const decode = decodeToken;
+  console.log(decode);
 
+  const [config, setConfig] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3001/api/settings")
       .then((res) => res.json())
@@ -41,7 +45,7 @@ function NavBar() {
   return (
     <Navbar expand="lg" bg="primary" variant="dark">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/home">
           Inicio
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -54,8 +58,8 @@ function NavBar() {
               Ayuda
             </Nav.Link>
             <NavDropdown title="Perfil" id="collasible-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/perfil">
-                Perfil
+              <NavDropdown.Item as={Link} to="/login">
+                {decode ? decode.token.name : "Perfil"}
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/password">
                 Cambiar Contraseña

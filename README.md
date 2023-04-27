@@ -30,8 +30,9 @@ v18.15.0
 
 
 ### Crear proyecto react:
-
-`npx create-react-app "mi_app"`
+```
+npx create-react-app "mi_app"
+```
 
 `npm start`
 

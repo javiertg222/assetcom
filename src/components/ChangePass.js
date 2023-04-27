@@ -85,8 +85,8 @@ function ChangePass() {
 
                     pattern: {
                       value:
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&][^'\s]/g,
-                      message: "Debe contener mayús. min. dígitos y @$!%*?&",
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!%*?&])[A-Za-z\d@!%*?&][^'\s]/g,
+                      message: "Debe contener mayús. min. dígitos y @!%*?&",
                     },
                   })}
                 />

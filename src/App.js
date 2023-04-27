@@ -21,10 +21,11 @@ function App() {
       <div className="App">
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/perfil" element={<LoginForm />}></Route>
+          <Route path="/" element={<LoginForm />}></Route>
+          <Route path="/login" element={<LoginForm />}></Route>
+          <Route path="/home" element={<Home />}></Route>
           <Route path="/password" element={<ChangePass />}></Route>
-          <Route path="/logout" element={<Logout />}></Route>
+          <Route path="/logout" element={<Logout /> && <Navigate to="/login"/>}></Route>
           <Route path="/admin/settings" element={<Settings />}></Route>
           <Route path="/admin" element={<Administration />}></Route>
           <Route path="/admin/users" element={<UsersList />}></Route>

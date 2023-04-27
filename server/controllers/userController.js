@@ -1,5 +1,5 @@
 const db = require("../database");
-const bcrypt = require("../services/bcryptService");
+const bcrypt = require("../utils/bcrypt");
 const changepass = require("../utils/findPassword");
 /**
  * Obtener todos los usuarios
@@ -123,7 +123,6 @@ async function deleteUser(req, res) {
       return;
     }
     res.json({ message: "deleted", data: req.params });
-  
   });
   stm.finalize();
 }

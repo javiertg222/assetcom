@@ -1,3 +1,4 @@
+const { body } = require("express-validator");
 //Servidor
 const express = require("express");
 //Módulo para evitar Access-Control-Allow-Origin
@@ -29,7 +30,13 @@ const { getEstadisticas } = require("./controllers/estadisticasController");
 //Controlador Backup
 const { backupController } = require("./controllers/backupController");
 //Controlador para la configuración
-const { createSetting, getSetting, updateSetting } = require("./controllers/settingsController");
+const {
+  createSetting,
+  getSetting,
+  updateSetting,
+} = require("./controllers/settingsController");
+//Controlador para el login
+const { loginController } = require("./controllers/loginController");
 
 //const auth = require("./middlewares/auth");
 //Variable de entorno (puerto de escucha del servidor)
@@ -153,6 +160,13 @@ app.get("/api/backup", (req, res, next) => {
   backupController(req, res);
 });
 
+/**
+ * LOGIN
+ */
+app.post("/api/login", body("email").trim().isEmail(),
+body("password").trim(), (req, res, next) => {
+  loginController(req, res);
+});
 
 /**
  * INICIAR EL SERVIDOR

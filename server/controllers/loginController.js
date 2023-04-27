@@ -1,44 +1,54 @@
-const createJWT = require('../utils-server/createJWT');
-
+const { validationResult } = require("express-validator");
+const db = require("../database");
+const { findEmail } = require("../utils/findEmail");
+const bcrypt = require("../utils/bcrypt");
+const { createToken } = require("../utils/createToken");
 /**
  * Este controlador es el encargado de logear a un usuario
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 const loginController = async (req, res) => {
-    try{
+  try {
+    const userBody = {
+      email: req.body.email,
+      password: req.body.password,
+    };
+    const errors = await validationResult(req); // Encuentra los errores de validación en esta solicitud y los envuelve en un objeto
 
-      createJWT(user)
-      req = matchedData(req);
-      const user = await usersModel.findOne({email:req.email})
-  
-      if(!user){
-        handleHttpError(res, "USER_NOT_EXISTS", 404);
-        return
+    if (!errors.isEmpty())
+      return res
+        .status(422)
+        .json({ errors: errors.array(), error: "Email o password inválidos" });
+
+    //Recupero todos los datos de los usuarios para comprobar que el email y password existen.
+    db.all("SELECT * FROM user", async (err, users) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
       }
-  
-      const hashPassword = user.get('password');
-  
-      const check = await compare(req.password, hashPassword)
-  
-      if(!check){
-        handleHttpError(res, "PASSWORD_INVALID", 401);
-        return
+      const user = await findEmail(userBody.email, users);
+      if (!user) {
+        return res.status(400).json({ error: "Usuario no encontrado" });
       }
-  
-      user.set('password', undefined, {strict:false})
-      const data = {
-        token: await tokenSign(user),
-        user
+      const validPassword = await bcrypt.compare(
+        userBody.password,
+        user.password_user
+      );
+      if (!validPassword) {
+        return res.status(400).json({ error: "Contraseña incorrecta" });
       }
 
-      res.send({data})
-  
-  
-    }catch(e){
-      console.log(e)
-      
-    }
+      //Crear token
+      const token = createToken(user);
+
+      res.header("auth-token", token).json({
+        error: null,
+        token: token,
+      });
+    });
+  } catch (err) {
+    console.log(err);
   }
+};
 
-  module.exports = { loginController };
+module.exports = { loginController };

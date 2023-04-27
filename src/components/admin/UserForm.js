@@ -203,7 +203,7 @@ function UserForm() {
 
                   validate: (defaultValue) =>
                     defaultValue===datos.email?null:!findEmail(defaultValue) ||
-                    "Ya existe un usuario con ese nombre ",
+                    "Ya existe un usuario con ese email",
                 })}
               />
               <span className="text-danger text-small d-block mb-2">
@@ -235,8 +235,8 @@ function UserForm() {
 
                     pattern: {
                       value:
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&][^'\s]/g,
-                      message: "Debe contener mayús. min. dígitos y @$!%*?&",
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!%*?&])[A-Za-z\d@!%*?&][^'\s]/g,
+                      message: "Debe contener mayús. min. dígitos y @!%*?&",
                     },
                   })}
                 />
